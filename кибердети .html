@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Цифровая безопасность школьника</title>
+  <meta name="description" content="Простой образовательный сайт: советы и правила цифровой безопасности для школьников и родителей." />
+  <style>
+    /* ========== Базовая стилизация ========== */
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#3b82f6;
+      --accent-2:#06b6d4;
+      --glass: rgba(255,255,255,0.03);
+      --radius:12px;
+      --maxw:1000px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#071028 0%, #081426 50%, #08111a 100%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      padding:24px;
+      display:flex;
+      justify-content:center;
+    }
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+    }
+
+    header{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:20px;
+    }
+    .logo{
+      width:64px;
+      height:64px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:grid;
+      place-items:center;
+      box-shadow: 0 6px 18px rgba(3,7,18,0.6);
+      flex:0 0 64px;
+    }
+    .logo svg{width:40px;height:40px;filter:drop-shadow(0 4px 10px rgba(59,130,246,0.35))}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+    main{
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:20px;
+      align-items:start;
+    }
+
+    /* Левый столбец: контент */
+    .content{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow: 0 6px 24px rgba(2,6,23,0.6);
+    }
+    .section{margin-bottom:18px}
+    .section h2{margin:0 0 10px;font-size:16px}
+    .card-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+    }
+    .card{
+      background:var(--card);
+      padding:12px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .card h3{margin:0 0 8px;font-size:14px}
+    .card p{margin:0;color:var(--muted);font-size:13px}
+
+    /* Правый столбец: боковая панель */
+    aside{
+      position:sticky;
+      top:24px;
+      align-self:start;
+    }
+    .aside-card{
+      background:var(--card);
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      margin-bottom:12px;
+    }
+    .tips-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+    .tips-list li{display:flex;gap:10px;align-items:flex-start}
+    .badge{
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      padding:6px 8px;border-radius:8px;font-weight:600;font-size:12px;
+      box-shadow:0 4px 12px rgba(10,20,40,0.4)
+    }
+
+    /* Викторина */
+    .quiz-question{font-weight:600;margin-bottom:8px}
+    .answers{display:grid;gap:8px}
+    .answer-btn{
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,0.04);
+      padding:10px;border-radius:8px;text-align:left;cursor:pointer;
+      font-size:14px;color:inherit;
+    }
+    .answer-btn:hover{transform:translateY(-2px);transition:all 0.15s ease}
+    .answer-btn.correct{outline:2px solid rgba(34,197,94,0.25); background: rgba(34,197,94,0.06)}
+    .answer-btn.wrong{outline:2px solid rgba(239,68,68,0.18); background: rgba(239,68,68,0.04)}
+
+    /* Аккордеон */
+    .faq-item{border-top:1px dashed rgba(255,255,255,0.02); padding:10px 0}
+    .faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+    .faq-a{max-height:0;overflow:hidden;transition: max-height 0.25s ease; color:var(--muted);font-size:13px}
+
+    /* Футер */
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* Мобильная адаптация */
+    @media (max-width:880px){
+      main{grid-template-columns:1fr; padding-bottom:60px}
+      aside{position:static}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo" aria-hidden="true">
+        <!-- simple shield icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2L4 5v6c0 5 4 9 8 11 4-2 8-6 8-11V5l-8-3z" fill="white" opacity="0.95"/>
+          <path d="M9.5 11.5L11.5 13.5 14.5 10.5" stroke="#0b1220" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Цифровая безопасность школьника</h1>
+        <p class="lead">Короткие понятные правила и интерактивная викторина для школьников и родителей.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="content" aria-labelledby="main-title">
+        <h2 id="main-title">Что такое цифровая безопасность?</h2>
+        <p style="color:var(--muted);margin-top:8px">
+          Цифровая безопасность — это правила и навыки, которые помогают защищать личные данные, устройства и репутацию в интернете.
+          Здесь простые практические советы, которые школьник может применить прямо сейчас.
+        </p>
+
+        <div class="section">
+          <h2>Базовые правила</h2>
+          <div class="card-grid">
+            <article class="card" aria-labelledby="rule1">
+              <h3 id="rule1">1. Надёжные пароли</h3>
+              <p>Используй уникальные пароли для важных аккаунтов. Пароль должен быть длинным (12+ символов), смешивать буквы, цифры и символы.</p>
+            </article>
+
+            <article class="card" aria-labelledby="rule2">
+              <h3 id="rule2">2. Двухфакторная аутентификация</h3>
+              <p>Включай 2FA (через приложение-генератор или SMS) там, где это доступно — это повышает безопасность даже при угоне пароля.</p>
+            </article>
+
+            <article class="card" aria-labelledby="rule3">
+              <h3 id="rule3">3. Осторожность с ссылками</h3>
+              <p>Не переходи по подозрительным ссылкам и не открывай вложения от незнакомых людей — это частые способы заражения и фишинга.</p>
+            </article>
+
+            <article class="card" aria-labelledby="rule4">
+              <h3 id="rule4">4. Настройки приватности</h3>
+              <p>Проверь настройки конфиденциальности в соцсетях: кто видит публикации, список друзей и личные данные.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Что делать если что-то пошло не так?</h2>
+          <div class="card">
+            <p style="margin-bottom:8px;color:var(--muted)">
+              Если тебя кто-то оскорбляет, шантажирует или просят прислать личные фото:
+            </p>
+            <ul style="margin:0 0 8px 18px;color:var(--muted)">
+              <li>Не отвечай агрессору и не отправляй дополнительных материалов.</li>
+              <li>Сохрани скриншоты и сообщения.</li>
+              <li>Покажи взрослому (родителям, учителю) или сообщи в администрацию платформы (жалоба/бан).</li>
+            </ul>
+            <p style="margin:0;color:var(--muted)"><strong>Важно:</strong> никогда не платите шантажистам — скорее всего, это обман.</p>
+          </div>
+        </div>
+
+        <div class="section" id="for-parents">
+          <h2>Советы для родителей</h2>
+          <div class="card-grid">
+            <div class="card">
+              <h3>Разговор и доверие</h3>
+              <p>Обсудите правила использования сети: допустимое время, ресурсы, что можно публиковать. Поддерживайте открытый диалог, чтобы ребёнок делился проблемами.</p>
+            </div>
+            <div class="card">
+              <h3>Настройки и ограничения</h3>
+              <p>Используйте родительский контроль (встроенный в ОС, приложения или роутер). Настройте фильтры и время доступа.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="faq">
+          <h2>Частые вопросы</h2>
+
+          <div class="card">
+            <div class="faq-item">
+              <div class="faq-q" tabindex="0">
+                <div><strong>Как распознать фишинг?</strong></div>
+                <div aria-hidden="true">+</div>
+              </div>
+              <div class="faq-a">
+                <p>Фишинговые письма часто просят срочно ввести пароль, предлагают выигрыш или содержат ошибки в адресе отправителя. Лучше напрямую открыть сайт компании, а не переходить по ссылке.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q" tabindex="0">
+                <div><strong>Можно ли давать пароль другу?</strong></div>
+                <div aria-hidden="true">+</div>
+              </div>
+              <div class="faq-a">
+                <p>Нельзя. Пароли — личные. Совместный доступ лучше организовать через семейные функции или общие аккаунты с отдельной учётной записью.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="quiz">
+          <h2>Мини-викторина — проверь знания</h2>
+          <div class="card">
+            <div id="quiz-area">
+              <div id="q-text" class="quiz-question">Загрузка...</div>
+              <div id="answers" class="answers"></div>
+              <div style="margin-top:10px;display:flex;gap:8px;">
+                <button id="nextBtn" class="answer-btn" style="padding:8px 12px;min-width:120px;">Следующий вопрос</button>
+                <div id="score" style="margin-left:auto;color:var(--muted);align-self:center">Баллы: 0</div>
+              </div>
+            </div>
+            <div id="quiz-end" style="display:none;color:var(--muted);margin-top:8px">
+              <p><strong>Тест завершён.</strong> Возвращайся, чтобы повторить и улучшить результат.</p>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          <p>Создано для обучения — делись с друзьями и будь внимателен в сети.</p>
+        </footer>
+      </section>
+
+      <aside>
+        <div class="aside-card">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div class="badge">Совет</div>
+            <div>
+              <strong>Не говори пароль даже лучшему другу</strong>
+              <div style="color:var(--muted);font-size:13px">Это поможет защитить тебя, если аккаунт взломают.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="aside-card">
+          <h3 style="margin:0 0 8px 0">Быстрые ссылки</h3>
+          <ul style="margin:0;padding:0;list-style:none;color:var(--muted);font-size:13px">
+            <li>• Настройки приватности в соцсетях</li>
+            <li>• Родительский контроль</li>
+            <li>• Как сообщить о буллинге</li>
+          </ul>
+        </div>
+
+        <div class="aside-card">
+          <h3 style="margin:0 0 8px 0">Контакты</h3>
+          <p style="margin:0;color:var(--muted);font-size:13px">Если случилось что-то серьёзное — поговори с родителем или школьным психологом. Сохраняй доказательства (скриншоты).</p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    /* ========== Аккордеон FAQ ========== */
+    document.querySelectorAll('.faq-q').forEach(function(el){
+      el.addEventListener('click', function(){
+        const a = this.nextElementSibling;
+        if(!a) return;
+        if(a.style.maxHeight && a.style.maxHeight !== '0px'){
+          a.style.maxHeight = '0';
+        } else {
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+      // keyboard accessibility
+      el.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
+
+    /* ========== Викторина ========== */
+    const quiz = [
+      {
+        q: "Что нужно сделать, если тебе прислали ссылку от незнакомого человека?",
+        choices: ["Сразу открыть — возможно это подарок", "Перейти и ввести свои данные", "Не переходить и спросить у взрослых", "Переслать друзьям"],
+        a: 2
+      },
+      {
+        q: "Какой пароль лучше?",
+        choices: ["123456", "Имя+год рождения", "Длинная фраза со знаками", "Повторяющийся набор букв"],
+        a: 2
+      },
+      {
+        q: "Что такое фишинг?",
+        choices: ["Рыбалка", "Попытка обманом получить личные данные", "Программа для музыки", "Антивирус"],
+        a: 1
+      },
+      {
+        q: "Кому стоит рассказать, если тебя оскорбляют онлайн?",
+        choices: ["Никому", "Только самому агрессору", "Родителям или школьному психологу", "Только друзьям"],
+        a: 2
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    const qText = document.getElementById('q-text');
+    const answersEl = document.getElementById('answers');
+    const nextBtn = document.getElementById('nextBtn');
+    const scoreEl = document.getElementById('score');
+    const quizEnd = document.getElementById('quiz-end');
+
+    function renderQuestion(){
+      if(current >= quiz.length){
+        document.getElementById('quiz-area').style.display = 'none';
+        quizEnd.style.display = 'block';
+        return;
+      }
+      const item = quiz[current];
+      qText.textContent = (current + 1) + '. ' + item.q;
+      answersEl.innerHTML = '';
+      item.choices.forEach((ch, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        btn.textContent = ch;
+        btn.type = 'button';
+        btn.addEventListener('click', function(){
+          // prevent multiple clicks
+          if(btn.dataset.locked) return;
+          // lock all buttons
+          answersEl.querySelectorAll('.answer-btn').forEach(b=>{
+            b.dataset.locked = '1';
+            b.disabled = true;
+          });
+          if(idx === item.a){
+            btn.classList.add('correct');
+            score += 1;
+            scoreEl.textContent = 'Баллы: ' + score;
+          } else {
+            btn.classList.add('wrong');
+            // highlight correct
+            const correctBtn = answersEl.querySelectorAll('.answer-btn')[item.a];
+            if(correctBtn) correctBtn.classList.add('correct');
+          }
+        });
+        answersEl.appendChild(btn);
+      });
+    }
+
+    nextBtn.addEventListener('click', function(){
+      current++;
+      renderQuestion();
+    });
+
+    // Инициализация
+    renderQuestion();
+
+    /* ========== Небольшая подсказка: защита от копирования (опционально) ========== */
+    // можно закомментировать, если мешает
+    // document.addEventListener('contextmenu', e => e.preventDefault());
+    // document.addEventListener('keydown', e => {
+    //   if(e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
+    // });
+
+    // Настройка доступности: раскрыть первый FAQ при загрузке, если нужно
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.faq-a').forEach(a => a.style.maxHeight = '0');
+    });
+  </script>
+</body>
+</html>
